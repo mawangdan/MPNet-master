@@ -6,7 +6,7 @@ import os.path
 import random
 from torch.autograd import Variable
 import torch.nn as nn
-
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 # Environment Encoder
 class Encoder(nn.Module):
     def __init__(self):
@@ -43,7 +43,7 @@ def load_dataset(N=135, NP=45):
             # obstacles = np.zeros((1, 2800), dtype=np.float32)
             # obstacles[0] = temp.flatten()
             inp = torch.from_numpy(obstacles_point_list[i])
-            #inp = Variable(inp).cuda()
+            inp = Variable(inp).cuda()
             output = Q(inp)
             output = output.data.cpu()
             obs_rep[i] = output.numpy()

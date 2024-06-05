@@ -77,6 +77,7 @@ def main(args):
 	model_path='mlp_100_4000_PReLU_ae_dd_final.pkl'
 	torch.save(mlp.state_dict(),os.path.join(args.model_path,model_path))
 if __name__ == '__main__':
+	print("begin")
 	parser = argparse.ArgumentParser()
 	parser.add_argument('--model_path', type=str, default='./models/',help='path for saving trained models')
 	parser.add_argument('--no_env', type=int, default=50,help='directory for obstacle images')

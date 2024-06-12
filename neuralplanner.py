@@ -350,14 +350,14 @@ def main(args):
 					t=toc-tic
 					et.append(t)
 					fp=fp+1
-					for pp in range(0,7):
-						print ("path[%d]:",pp)
-						for p in range(0,len(path)):
-							print (path[p][pp])
-					for pp in range(0,7):
-						print ("Actual path[%d]:",pp)
-						for p in range(0,int(min(m_length[i],300)-1)):
-							print (solutions[i,p,pp])
+					# for pp in range(0,7):
+					# 	print ("path[%d]:",pp)
+					# 	for p in range(0,len(path)):
+					# 		print (path[p][pp])
+					# for pp in range(0,7):
+					# 	print ("Actual path[%d]:",pp)
+					# 	for p in range(0,int(min(m_length[i],300)-1)):
+					# 		print (solutions[i,p,pp])
 				else:
 					sp=0
 					indicator=0
@@ -375,17 +375,17 @@ def main(args):
 							t=toc-tic
 							et.append(t)
 							fp=fp+1
-							if len(path)<20:
-								for pp in range(0, 7):
-									print("path[%d]:", pp)
-									for p in range(0, len(path)):
-										print(path[p][pp])
-								for pp in range(0, 7):
-									print("Actual path[%d]:", pp)
-									for p in range(0, int(min(m_length[i],300)-1)):
-										print(solutions[i, p, pp])
-							else:
-								print("path found, dont worry")
+							# if len(path)<20:
+							# 	for pp in range(0, 7):
+							# 		print("path[%d]:", pp)
+							# 		for p in range(0, len(path)):
+							# 			print(path[p][pp])
+							# 	for pp in range(0, 7):
+							# 		print("Actual path[%d]:", pp)
+							# 		for p in range(0, int(min(m_length[i],300)-1)):
+							# 			print(solutions[i, p, pp])
+							# else:
+							# 	print("path found, dont worry")
 		tot.append(path)
 	logging.info("save...")
 	with h5py.File(f"test.hdf5", "w-") as f:

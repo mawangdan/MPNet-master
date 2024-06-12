@@ -1,4 +1,6 @@
 import argparse
+import logging
+
 import torch
 import torch.nn as nn
 import numpy as np
@@ -48,11 +50,11 @@ def main(args):
     
 	# Train the Models
 	total_loss=[]
-	print(len(dataset))
-	print(len(targets))
+	logging.info(len(dataset))
+	logging.info(len(targets))
 	sm=100 # start saving models after 100 epochs
 	for epoch in range(args.num_epochs):
-		print("epoch" + str(epoch))
+		logging.info("epoch" + str(epoch))
 		avg_loss=0
 		for i in range (0,len(dataset),args.batch_size):
 			# Forward, Backward and Optimize
@@ -65,19 +67,31 @@ def main(args):
 			avg_loss=avg_loss+loss.item()
 			loss.backward()
 			optimizer.step()
-		print("--average loss:")
-		print(avg_loss / (len(dataset) / args.batch_size))
+		logging.info("--average loss:")
+		logging.info(avg_loss / (len(dataset) / args.batch_size))
 		total_loss.append(avg_loss/(len(dataset)/args.batch_size))
 		# Save the models
 		if epoch==sm:
 			model_path='mlp_100_4000_PReLU_ae_dd'+str(sm)+'.pkl'
+			logging.info('save mlp_100_4000_PReLU_ae_dd'+str(sm)+'.pkl')
 			torch.save(mlp.state_dict(),os.path.join(args.model_path,model_path))
 			sm=sm+50 # save model after every 50 epochs from 100 epoch ownwards
 	torch.save(total_loss,'total_loss.dat')
 	model_path='mlp_100_4000_PReLU_ae_dd_final.pkl'
 	torch.save(mlp.state_dict(),os.path.join(args.model_path,model_path))
+def setup_logging(log_file):
+    # 配置日志记录
+    logging.basicConfig(
+        level=logging.INFO,  # 设置日志级别
+        format='%(asctime)s - %(levelname)s - %(message)s',  # 设置日志格式
+        handlers=[
+            logging.FileHandler(log_file),  # 日志记录到文件
+            logging.StreamHandler()  # 日志同时输出到控制台（可以选择性关闭）
+        ]
+    )
 if __name__ == '__main__':
-	print("begin")
+	setup_logging("log1.log")
+	logging.info("begin")
 	parser = argparse.ArgumentParser()
 	parser.add_argument('--model_path', type=str, default='./models/',help='path for saving trained models')
 	parser.add_argument('--no_env', type=int, default=50,help='directory for obstacle images')
@@ -95,7 +109,7 @@ if __name__ == '__main__':
 	parser.add_argument('--batch_size', type=int, default=100)
 	parser.add_argument('--learning_rate', type=float, default=0.0001)
 	args = parser.parse_args()
-	print(args)
+	logging.info(args)
 	main(args)
 
 

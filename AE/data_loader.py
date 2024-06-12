@@ -114,7 +114,7 @@ def get_point_cloud_from_urdf(urdf_path, num_points,center):
 def save_point_cloud(NP=1800):
 
 
-    with h5py.File(f"./train_data-63.hdf5", "r") as f:
+    with h5py.File(f"./test_data-10.hdf5", "r") as f:
         m_length = f["m_length"][:]
         N = int(m_length.__len__())
         obstacles_point_list = np.zeros((N, 1400 * 3), dtype=np.float32)
@@ -156,7 +156,7 @@ def save_point_cloud(NP=1800):
                         get_point_cloud_from_urdf("../medium_cube.urdf", 700, cube_centers[i][j]))
 
             obstacles_point_list[i]=np.concatenate((obstacles_point[0], obstacles_point[1]), axis=1).flatten()
-        with h5py.File(f"point_cloud.hdf5", "w-") as f:
+        with h5py.File(f"test_point_cloud.hdf5", "w-") as f:
             tmp = f.create_dataset("obstacles_point_list", (N, 1400*3))
             tmp[...]=obstacles_point_list[...]
             tmp = f.create_dataset("solutions", (N, 300,7))
@@ -165,6 +165,16 @@ def save_point_cloud(NP=1800):
             tmp[...] = m_length[...]
             tmp = f.create_dataset("end_effector_positions", (N,300, 3))
             tmp[...] = end_effector_positions[...]
+            tmp = f.create_dataset("sphere_centers", (N, 2, 3))
+            tmp[...] = sphere_centers[...]
+            tmp = f.create_dataset("sphere_radiis", (N, 2))
+            tmp[...] = sphere_radiis[...]
+            tmp = f.create_dataset("cube_centers", (N, 2, 3))
+            tmp[...] = cube_centers[...]
+            tmp = f.create_dataset("cube_sizes", (N, 2))
+            tmp[...] = cube_sizes[...]
+
+
 
 def load_dataset(N=6075,NP=1800):
     obstacles_point_list = np.zeros((N, 1400*3), dtype=np.float32)

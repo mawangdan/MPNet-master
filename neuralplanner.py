@@ -412,6 +412,7 @@ def main(args):
 	print (fp)
 
 if __name__ == '__main__':
+	setup_logging("log_test.log")
 	parser = argparse.ArgumentParser()
 	parser.add_argument('--model_path', type=str, default='./models/',help='path for saving trained models')
 	parser.add_argument('--no_env', type=int, default=50,help='directory for obstacle images')

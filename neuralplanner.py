@@ -61,13 +61,13 @@ def IsInCollision(x,idx):
 	obss=[]
 	for j in range(0, 2):
 		if abs(sphere_radiis[idx][j] - 0.2) < 0.01:
-			urdf_path="../medium_sphere.urdf"
+			urdf_path="./medium_sphere.urdf"
 			obss.append(load_urdf_model(urdf_path, base_position=sphere_centers[idx][j]))
 		if abs(sphere_radiis[idx][j] - 0.1) < 0.01:
-			urdf_path="../small_sphere.urdf"
+			urdf_path="./small_sphere.urdf"
 			obss.append(load_urdf_model(urdf_path, base_position=sphere_centers[idx][j]))
 		if abs(cube_sizes[idx][j] - 0.2) < 0.01:
-			urdf_path="../medium_cube.urdf"
+			urdf_path="./medium_cube.urdf"
 			obss.append(load_urdf_model(urdf_path, base_position=cube_centers[idx][j]))
 
 

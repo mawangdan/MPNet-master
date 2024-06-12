@@ -26,7 +26,6 @@ def setup_logging(log_file):
 size=5.0
 import pybullet as p
 import pybullet_data
-import open3d as o3d
 
 p.connect(p.DIRECT)
 p.setAdditionalSearchPath(pybullet_data.getDataPath())

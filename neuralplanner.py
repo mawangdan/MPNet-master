@@ -387,22 +387,22 @@ def main(args):
 							# else:
 							# 	print("path found, dont worry")
 		tot.append(path)
-	logging.info("save...")
-	with h5py.File(f"test.hdf5", "w-") as f:
-		dt = h5py.vlen_dtype(np.dtype('float32'))
+		if i%50==1 :
+			logging.info("save...")
+			with h5py.File(f"test" + str(i) + ".hdf5", "w-") as f:
+				# 创建数据集并写入数据
+				dset = f.create_dataset('tot', (len(tot),254,7))
+				dset[:] = tot
 
-		# 创建数据集并写入数据
-		dset = f.create_dataset('tot', (len(tot),), dtype=dt)
-		dset[:] = tot
+				tmp = f.create_dataset("sphere_centers", (N, 2, 3))
+				tmp[...] = sphere_centers[...]
+				tmp = f.create_dataset("sphere_radiis", (N, 2))
+				tmp[...] = sphere_radiis[...]
+				tmp = f.create_dataset("cube_centers", (N, 2, 3))
+				tmp[...] = cube_centers[...]
+				tmp = f.create_dataset("cube_sizes", (N, 2))
+				tmp[...] = cube_sizes[...]
 
-		tmp = f.create_dataset("sphere_centers", (N, 2, 3))
-		tmp[...] = sphere_centers[...]
-		tmp = f.create_dataset("sphere_radiis", (N, 2))
-		tmp[...] = sphere_radiis[...]
-		tmp = f.create_dataset("cube_centers", (N, 2, 3))
-		tmp[...] = cube_centers[...]
-		tmp = f.create_dataset("cube_sizes", (N, 2))
-		tmp[...] = cube_sizes[...]
 	pickle.dump(tot, open("time_s2D_unseen_mlp.p", "wb" ))	
 
 
